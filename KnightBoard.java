@@ -1,5 +1,6 @@
 public class KnightBoard{
   int[][] board;
+  int[] moves = {1, 2, 2, 1, 2, -1, 1, -2, -1, -2, -2, -1, -2, 1, -1, 2};
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols) {
       board = new int[startingRows][startingCols];
@@ -32,21 +33,27 @@ public class KnightBoard{
     //return true;
     if (level == board.length * board[0].length) return true;
     if (level < board.length * board[0].length) {
-      if (row < board.length && row >= 0 && col < board[row].length && col >= 0) {
-        if (board[row][col] == 0) {
-        board[row][col] = level;
-        // for (int r = -2; r < 3; r++) {
-        //   for (int c = -2; c < 3; c++) {
-        //     if (r != 0 && c != 0 && solveH(row + r, col + c, level + 1)) {
-        //       return true;
-        //     }
-        //     board[row][col] = 0;
-        //   }
-        // }
-        // return solveH(row-1, col-2, level+1) || solveH(row-2, col-1, level+1) || solveH(row-2, col+1, level+1) || solveH(row-1, col+2, level+1) ||
-        //        solveH(row+1, col+2, level+1) || solveH(row+2, col+1, level+1) || solveH(row+2, col-1, level+1) || solveH(row+1, col-2, level+1);
+      if (board[row][col])
+      for (int i = 0; i + 1 < move.length; i+=2) {
+        if (solveH(r + move[i], c + move[i+1], level + 1) {
+          return true;
         }
       }
+      // if (row < board.length && row >= 0 && col < board[row].length && col >= 0) {
+      //   if (board[row][col] == 0) {
+      //   board[row][col] = level;
+      //   // for (int r = -2; r < 3; r++) {
+      //   //   for (int c = -2; c < 3; c++) {
+      //   //     if (r != 0 && c != 0 && solveH(row + r, col + c, level + 1)) {
+      //   //       return true;
+      //   //     }
+      //   //     board[row][col] = 0;
+      //   //   }
+      //   // }
+      //   // return solveH(row-1, col-2, level+1) || solveH(row-2, col-1, level+1) || solveH(row-2, col+1, level+1) || solveH(row-1, col+2, level+1) ||
+      //   //        solveH(row+1, col+2, level+1) || solveH(row+2, col+1, level+1) || solveH(row+2, col-1, level+1) || solveH(row+1, col-2, level+1);
+      //   }
+      // }
     }
     return false;
   }
