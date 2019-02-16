@@ -23,6 +23,13 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative
   // or out of bounds.
   public boolean solve(int startingRow, int startingCol) {
+    // try{
+    //   for (int[] r : board) {
+    //     for (int c : r) {
+    //       if (board[r][c] != 0) throw new IllegalStateException();
+    //     }
+    //   }
+    // }
     return solveH(startingRow, startingCol, 1);
   }
   //@throws IllegalStateException when the board contains non-zero values.
@@ -30,31 +37,20 @@ public class KnightBoard{
   // or out of bounds.
   public int countSolutions(int startingRow, int startingCol) {return 0;}
   private boolean solveH(int row ,int col, int level) {
-    //return true;
-    if (level == board.length * board[0].length) return true;
-    if (level < board.length * board[0].length) {
-      if (board[row][col])
-      for (int i = 0; i + 1 < move.length; i+=2) {
-        if (solveH(r + move[i], c + move[i+1], level + 1) {
-          return true;
+    //System.out.println(toString());
+    if (level == board.length * board[0].length + 1) return true;
+    if (row >= board.length || row < 0 || col >= board[row].length || col < 0) return false;
+    if (level < board.length * board[0].length + 1) {
+      if (board[row][col] == 0) {
+        board[row][col] = level;
+        for (int i = 0; i + 1 < moves.length; i+=2) {
+          if (solveH(row + moves[i], col + moves[i+1], level + 1)) {
+            return true;
+          }
         }
+        board[row][col] = 0;
       }
-      // if (row < board.length && row >= 0 && col < board[row].length && col >= 0) {
-      //   if (board[row][col] == 0) {
-      //   board[row][col] = level;
-      //   // for (int r = -2; r < 3; r++) {
-      //   //   for (int c = -2; c < 3; c++) {
-      //   //     if (r != 0 && c != 0 && solveH(row + r, col + c, level + 1)) {
-      //   //       return true;
-      //   //     }
-      //   //     board[row][col] = 0;
-      //   //   }
-      //   // }
-      //   // return solveH(row-1, col-2, level+1) || solveH(row-2, col-1, level+1) || solveH(row-2, col+1, level+1) || solveH(row-1, col+2, level+1) ||
-      //   //        solveH(row+1, col+2, level+1) || solveH(row+2, col+1, level+1) || solveH(row+2, col-1, level+1) || solveH(row+1, col-2, level+1);
-      //   }
-      // }
-    }
+      }
     return false;
   }
   // level is the # of the knight
