@@ -7,7 +7,7 @@ public class Driver{
     //     test.board[r][c] = num++;
     //   }
     // }
-    test.solve(1,0);
+    test.solve(0,1);
     System.out.println(test.toString());
   }
 }
