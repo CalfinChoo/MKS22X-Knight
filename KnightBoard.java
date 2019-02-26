@@ -75,3 +75,8 @@ public class KnightBoard{
   //&& board[row + moves[i]][col + moves[i+1]] == 0
   // level is the # of the knight
 }
+class Point {
+  int possibleMoves;
+  int[] position = new int[2];
+  public Point()
+}
