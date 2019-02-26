@@ -1,9 +1,24 @@
 public class KnightBoard{
   int[][] board;
   int[] moves = {1, 2, 2, 1, 2, -1, 1, -2, -1, -2, -2, -1, -2, 1, -1, 2};
+  int[][] numMoves;
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols) {
       board = new int[startingRows][startingCols];
+      numMoves = new int[startingRows][startingCols];
+      for (int r = 0; r < numMoves.length; r++) {
+        for ( int c = 0; c < numMoves[r].length; c++) {
+          if ((r == 0 || r == numMoves.length - 1) && (c == 0 || c == numMoves[r].length - 1)) numMoves[r][c] = 2;
+          if (((r == 0 || r == numMoves.length - 1) && (c == 1 || c == numMoves[r].length - 2)) ||
+             ((c == 0 || c == numMoves[r].length - 1) && (r == 1 || r == numMoves.length - 2))) numMoves[r][c] = 3;
+          if (((r == 0 || r == numMoves.length - 1) && (c > 1 && c < numMoves[r].length - 2)) ||
+             ((c == 0 || c == numMoves[r].length - 1) && (r > 1 && r < numMoves.length - 2)) ||
+             ((r == 1 || r == numMoves.length - 2) && (c == 1 || c == numMoves[r].length - 2))) numMoves[r][c] = 4;
+          if (((r == 1 || r == numMoves.length - 2) && (c > 1 && c < numMoves[r].length - 2)) ||
+             ((c == 1 || c == numMoves[r].length - 2) && (r > 1 && r < numMoves.length - 2))) numMoves[r][c] = 6;
+          if ((r > 1 && r < numMoves.length - 2 && c > 1 && c < numMoves[r].length - 2)) numMoves[r][c] = 8;
+        }
+      }
   }
   public String toString() {
     String s = "";
