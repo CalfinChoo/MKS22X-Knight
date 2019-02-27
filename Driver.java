@@ -9,6 +9,6 @@ public class Driver{
     // }
     test.solve(0,0);
     //test.solve(0,0);
-    System.out.println(test.toString());
+    System.out.println(test.printOptBoard());
   }
 }

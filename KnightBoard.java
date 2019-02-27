@@ -1,9 +1,34 @@
+import java.util.ArrayList;
 public class KnightBoard{
   int[][] board;
+  int[][] optBoard;
   int[][] moves = {{1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}};
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols) {
       board = new int[startingRows][startingCols];
+      optBoard = new int[startingRows][startingCols];
+      fillOptBoard();
+  }
+  public void fillOptBoard() {
+    for (int r = 0; r < optBoard.length; r++) {
+      for (int c = 0; c < optBoard[r].length; c++) {
+        int count = 0;
+        for (int[] m : moves) {
+          if (r + m[0] >= 0 && r + m[0] < optBoard.length && c + m[1] >= 0 && c + m[1] < optBoard[0].length) count++;
+        }
+        optBoard[r][c] = count;
+      }
+    }
+  }
+  public String printOptBoard() {
+    String s = "";
+    for (int[] r : optBoard) {
+      for (int c : r) {
+        s += c;
+      }
+      s += "\n";
+    }
+    return s;
   }
   public String toString() {
     String s = "";
