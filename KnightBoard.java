@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 public class KnightBoard{
   int[][] board;
   int[][] optBoard;
@@ -58,7 +59,7 @@ public class KnightBoard{
       e.printStackTrace();
       return false;
     }
-    return solveH(startingRow, startingCol, 1);
+    return optSolveH(startingRow, startingCol, 1);
   }
   //@throws IllegalStateException when the board contains non-zero values.
   //@throws IllegalArgumentException when either parameter is negative
@@ -91,4 +92,46 @@ public class KnightBoard{
     }
     return false;
   }
+  private boolean optSolveH(int row, int col, int level) {
+    //System.out.println(toString());
+    board[row][col] = level;
+    if (level == board.length * board[0].length) return true;
+    ArrayList<Coordinate> possMoves = new ArrayList<Coordinate>();
+    for (int i = 0; i < moves.length; i++) {
+      int r = row + moves[i][0];
+      int c = col + moves[i][1];
+      if (r >= 0 && r < board.length && c >= 0 && c < board[r].length && board[r][c] == 0) {
+        possMoves.add(new Coordinate(r, c, optBoard[r][c]));
+      }
+    }
+    Collections.sort(possMoves);
+    for (Coordinate i : possMoves) {
+      optBoard[i.getR()][i.getC()]--;
+    }
+    for (Coordinate i : possMoves) {
+      int old = optBoard[i.getR()][i.getC()]--;
+      optBoard[i.getR()][i.getC()] = 0;
+      if (optSolveH(i.getR(), i.getC(), level + 1)) {
+        return true;
+      }
+      optBoard[i.getR()][i.getC()] = old;
+    }
+    board[row][col] = 0;
+    return false;
+  }
+}
+class Coordinate implements Comparable<Coordinate> {
+  int value;
+  int r;
+  int c;
+  public Coordinate(int row, int col, int val) {
+    r = row;
+    c = col;
+    value = val;
+  }
+  public int compareTo(Coordinate c) {
+    return value - c.value;
+  }
+  public int getR() {return r;}
+  public int getC() {return c;}
 }
