@@ -64,7 +64,41 @@ public class KnightBoard{
   //@throws IllegalStateException when the board contains non-zero values.
   //@throws IllegalArgumentException when either parameter is negative
   // or out of bounds.
-  public int countSolutions(int startingRow, int startingCol) {return 0;}
+  public int countSolutions(int startingRow, int startingCol) {
+    try{
+      for (int[] r : board) {
+        for (int c : r) {
+          if (c != 0) throw new IllegalStateException("Board is not empty");
+        }
+      }
+    } catch (IllegalStateException e) {
+      e.printStackTrace();
+    }
+    board[startingRow][startingCol] = 1;
+    return countH(startingRow, startingCol, 2, 0);
+  }
+  private int countH(int row, int col, int level, int sol) {
+    if (level == board.length * board[0].length + 1) sol++;
+    for (int i = 0; i < moves.length; i++) {
+      int r = row + moves[i][0];
+      int c = col + moves[i][1];
+      if (addKnight(r, c, level)) {
+        int solUpdate = countH(r, c, level + 1, sol);
+        if (solUpdate > sol) sol = solUpdate;
+        removeKnight(r, c);
+      }
+    }
+    // if (addKnight(row, col, level)) {
+    //   for (int i = 0; i < moves.length; i++) {
+    //     int r = row + moves[i][0];
+    //     int c = col + moves[i][1];
+    //     int solUpdate = countH(r, c, level + 1, sol);
+    //     if (solUpdate > sol) sol = solUpdate;
+    //   }
+    //   removeKnight(row, col);
+    // }
+    return sol;
+  }
   private boolean addKnight(int row, int col, int level) {
     if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) return false;
     if (board[row][col] != 0) return false;
@@ -109,12 +143,12 @@ public class KnightBoard{
       optBoard[i.getR()][i.getC()]--;
     }
     for (Coordinate i : possMoves) {
-      int old = optBoard[i.getR()][i.getC()]--;
+      int prev = optBoard[i.getR()][i.getC()]--;
       optBoard[i.getR()][i.getC()] = 0;
       if (optSolveH(i.getR(), i.getC(), level + 1)) {
         return true;
       }
-      optBoard[i.getR()][i.getC()] = old;
+      optBoard[i.getR()][i.getC()] = prev;
     }
     board[row][col] = 0;
     return false;
